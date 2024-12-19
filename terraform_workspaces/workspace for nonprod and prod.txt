@@ -1,0 +1,181 @@
+
+To manage non-prod and prod AWS accounts while applying infrastructure changes with Terraform, you should adopt a strategy that maintains separation of environments and minimizes the risk of errors. Here’s a step-by-step approach to achieve this:
+
+1️. Use AWS Profiles (Preferred)
+You can create separate AWS CLI profiles for non-prod and prod accounts. This is the most secure and straightforward approach.
+
+Step 1: Configure AWS CLI Profiles
+Run the following commands to set up AWS CLI profiles for non-prod and prod accounts.
+
+aws configure --profile nonprod
+# Enter Access Key, Secret Key, Region (ap-south-1, for example)
+
+aws configure --profile prod
+# Enter Access Key, Secret Key, Region
+This will save the credentials in ~/.aws/credentials like this:
+
+
+[nonprod]
+aws_access_key_id = <your_nonprod_access_key>
+aws_secret_access_key = <your_nonprod_secret_key>
+
+[prod]
+aws_access_key_id = <your_prod_access_key>
+aws_secret_access_key = <your_prod_secret_key>
+2️. Set Up Terraform Provider with Dynamic Profiles
+Use the profile argument in the provider block to control which AWS account to use.
+
+main.tf
+
+provider "aws" {
+  region  = var.region
+  profile = var.aws_profile
+}
+
+variable "region" {
+  description = "AWS region to deploy resources"
+  default     = "ap-south-1"
+}
+
+variable "aws_profile" {
+  description = "AWS CLI profile to use"
+}
+3️. Use Terraform Workspaces (Optional)
+Terraform workspaces allow you to manage multiple instances of your infrastructure within a single Terraform configuration. This helps to avoid having two separate Terraform state files.
+
+Commands
+
+terraform workspace new nonprod  # Create a workspace for non-prod
+terraform workspace new prod     # Create a workspace for prod
+
+terraform workspace list         # View all workspaces
+terraform workspace select nonprod  # Switch to non-prod
+terraform apply
+
+Benefits of Workspaces
+Maintains a separate state file for each environment.
+Ensures changes to non-prod don't accidentally affect prod.
+Allows you to use the same Terraform code for both environments.
+4️.  Separate Variables for Non-Prod and Prod
+Use separate variable files for non-prod and prod configurations. These files may include region, instance type, VPC IDs, and other specific differences.
+
+Directory Structure
+css
+Copy code
+├── main.tf
+├── variables.tf
+├── terraform.tfvars
+├── nonprod.tfvars
+├── prod.tfvars
+prod.tfvars
+hcl
+Copy code
+region       = "ap-south-1"
+aws_profile  = "prod"
+instance_type = "t3.micro"
+nonprod.tfvars
+hcl
+Copy code
+region       = "ap-south-1"
+aws_profile  = "nonprod"
+instance_type = "t2.micro"
+5️. Use -var-file Option for Apply
+When you apply changes, specify which environment you are targeting using -var-file.
+
+# For non-prod
+terraform workspace select nonprod
+terraform apply -var-file="nonprod.tfvars"
+
+# For prod
+terraform workspace select prod
+terraform apply -var-file="prod.tfvars"
+This ensures that the correct AWS account, region, and environment-specific parameters are used during the apply process.
+
+6️. Use S3 Backend for State File Storage
+To ensure your Terraform state file is centralized and secure, store it in an S3 bucket with encryption and versioning enabled.
+
+backend.tf
+
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state-bucket"
+    key            = "state/${terraform.workspace}/terraform.tfstate"
+    region         = "ap-south-1"
+    encrypt        = true
+  }
+}
+> Why use S3 backend?
+
+Centralized storage of state files for prod and non-prod.
+No accidental local file loss.
+Support for state locking using DynamoDB to prevent concurrent updates.
+7️. Enable State Locking with DynamoDB
+Enable state locking to avoid two users simultaneously updating the state file.
+
+backend.tf
+
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state-bucket"
+    key            = "state/${terraform.workspace}/terraform.tfstate"
+    region         = "ap-south-1"
+    encrypt        = true
+    dynamodb_table = "terraform-lock-table"
+  }
+}
+> Why lock state files?
+It prevents multiple users from making changes to the infrastructure at the same time, which could corrupt the state file.
+
+Full Example of main.tf
+
+provider "aws" {
+  region  = var.region
+  profile = var.aws_profile
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0fd05997b4dff7aac"
+  instance_type = var.instance_type
+  tags = {
+    Name = "example-${terraform.workspace}"
+  }
+}
+
+variable "region" {
+  description = "AWS region to deploy resources"
+  default     = "ap-south-1"
+}
+
+variable "aws_profile" {
+  description = "AWS CLI profile to use"
+}
+
+variable "instance_type" {
+  description = "Type of EC2 instance to create"
+  default     = "t2.micro"
+}
+Commands You’ll Use
+Command	Description
+terraform workspace new nonprod	            Create a new workspace for nonprod.
+terraform workspace new prod	            Create a new workspace for prod.
+terraform workspace list	                View all available workspaces.
+terraform workspace select prod	            Switch to the prod workspace.
+terraform apply -var-file=prod.tfvars	    Apply infrastructure to prod.
+terraform apply -var-file=nonprod.tfvars	Apply infrastructure to nonprod.
+
+Best Practices
+Do NOT Hardcode AWS Credentials: Use AWS CLI profiles or IAM roles.
+Use Terraform Workspaces: Separate prod and non-prod infrastructure.
+Enable Remote State Locking: Use DynamoDB to lock the state file.
+Use S3 for Remote State: Avoid local state files, store them in S3.
+Use CI/CD Pipelines: Run terraform plan first before running terraform apply for both environments.
+Automate It: Use Jenkins, GitHub Actions, or AWS CodePipeline.
+
+Summary
+Separate AWS Accounts: Use separate AWS profiles for prod and non-prod.
+Use Terraform Workspaces: Use workspaces to manage multiple environments.
+Store State in S3: Store state files in S3 with versioning and locking using DynamoDB.
+Use Environment-Specific Variables: Separate environment-specific variables using .tfvars files.
+Automate CI/CD: Automate the process with CI/CD pipelines for secure, repeatable deployments.
+If you'd like, I can create a full example of the folder structure and Terraform code for non-prod/prod environments with S3 and DynamoDB backend. 
+
