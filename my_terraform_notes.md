@@ -30,12 +30,13 @@ Answer: The reason Terraform did not create a new EC2 instance after you added t
 4.EBS Volume    :	      size, type, iops<br>
 5.VPC           :	      cidr_block, enable_dns_support, enable_dns_hostnames<br>
 
-main.tf (Desired State)              : This file defines the desired infrastructure (like resources, configurations, etc.).<br>
-.terraform/                          : Contains provider plugins and other metadata. It is ignored by Terraform.<br>
-.terraform.lock.hcl                  : Used for dependency locking to ensure consistent provider versions. It is not used for configuration.<br>
-terraform.tfstate (Current State)    : 1.Tracks the current state of the infrastructure.<br>
-                                       2. It is only read during terraform plan or terraform apply to compare the current state  with the desired state.<br>
-terraform.tfstate.backup             : A backup of the last known good terraform.tfstate file. It is only a backup and not used in configuration<br>
+1. main.tf (Desired State)              : This file defines the desired infrastructure (like resources, configurations, etc.).<br>
+2. .terraform/                          : Contains provider plugins and other metadata. It is ignored by Terraform.<br>
+3. .terraform.lock.hcl                  : Used for dependency locking to ensure consistent provider versions. It is not used for configuration.<br>
+4. terraform.tfstate (Current State)    :
+ - Tracks the current state of the infrastructure.<br>
+ -  It is only read during terraform plan or terraform apply to compare the current state  with the desired state.<br>
+5. terraform.tfstate.backup             : A backup of the last known good terraform.tfstate file. It is only a backup and not used in configuration<br>
 
 ## terraform init
 This command is used to initialize your Terraform configuration directory. It performs several tasks:
@@ -150,19 +151,19 @@ displays the instance private/public ips of the ec2 instance<br>
 ## Terraform Provisioner
 Terraform Provisioners are used to performing certain custom actions and tasks either on the local machine or on the remote machine
 The custom actions can vary in nature and it can be -<br>
-> Running custom shell script on the local machine<br>
-> Running custom shell script on the remote machine<br>
-> Copy file to the remote machine<br>
+- Running custom shell script on the local machine<br>
+- Running custom shell script on the remote machine<br>
+- Copy file to the remote machine<br>
 Generic Provisioners (file, local-exec, and remote-exec)<br>
 1. file provisioner<br>
 As the name suggests file provisioner can be used for transferring and copying the files from one machine to another machine.<br>
 Not only file but it can also be used for transferring/uploading the directories.<br>
-> Terraform provisioners only run when the resource (EC2 instance) is created. If the EC2 instance already exists, the file will not be copied again unless the instance is destroyed and recreated.<br>
+- Terraform provisioners only run when the resource (EC2 instance) is created. If the EC2 instance already exists, the file will not be copied again unless the instance is destroyed and recreated.<br>
 2. local-exec provisioner<br>
 It will always be used to perform local operations onto your local machine.<br>
 3. remote-exec provisioner<br>
  it is always going to work on the remote machine. remote-exec you can specify the commands of shell scripts that want to execute on the remote machine.<br>
- > Supporting arguments for remote provisioners
+ - Supporting arguments for remote provisioners
    1.inline - With the help of an inline argument you can specify the multiple commands which you want to execute in an ordered fashion.<br>
    ```hcl
    provisioner "remote-exec" {
@@ -212,11 +213,11 @@ module "jhooq-webserver-2" {
 Terraform workspaces is a very logical concept where you can have multiple states of your infrastructure configuration. To put this in simple words if you are running an infrastructure configuration in development environment then the same infrastructure can be run in the production environment.<br>
 If you have not defined any workspace then there is always a default workspace created by terraform, so you always work in a default workspace of terraform. <br>
 You can list the number of terraform workspaces by running the command terraform workspace show. Also, you can not delete the default workspace.<br>
-   > terraform workspace new <workspace name>    :  You must also type in new for creating a new workspace <br>
-   > terraform workspace list                    :  list all the workspaces which we have created previously<br>
-   > terraform workspace show                    :  which can help you to show the active running workspace in which you are working.<br>
-   > terraform workspace select <workspace name> :  switch between the workspaces<br>
-   > terraform workspace delete <workspace name> : delete the target workspace <br>
+   - terraform workspace new <workspace name>    :  You must also type in new for creating a new workspace <br>
+   - terraform workspace list                    :  list all the workspaces which we have created previously<br>
+   - terraform workspace show                    :  which can help you to show the active running workspace in which you are working.<br>
+   - terraform workspace select <workspace name> :  switch between the workspaces<br>
+   - terraform workspace delete <workspace name> : delete the target workspace <br>
 
 # Data resources
 Terraform data sources can be beneficial if you want to retrieve or fetch the data from the cloud service providers such as AWS, AZURE, and GCP.<br>
