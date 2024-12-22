@@ -254,3 +254,15 @@ After storing the .tfstate in s3 bucket , u see the local tfstate is missing . a
 ### Why Terraform State Locking is important?
  - It prevents Terraform state file(terraform.tfstate) from accidental updates by putting a lock on file so that the current update can be finished before processing the new change.<br>
     The feature of Terraform state locking is supported by AWS S3 and Dynamo DB.<br>
+    ```hcl
+    resource "aws_dynamodb_table" "state_locking" {
+    hash_key = "LockID"
+    name     = "dynamodb-state-locking"
+    attribute {
+     name = "LockID"
+     type = "S"
+     }
+     billing_mode = "PAY_PER_REQUEST"
+     }
+     ```
+  ###
