@@ -91,7 +91,7 @@ Syntax
         default     = "t2.micro"                # variable default value
        }
  ```	   
-## Simple Values variables
+## Simple Values variables(Terraform functions)
 As the name suggests Simple Values variables are which hold only a single value. Here the types of Simple Value variables <br>
 1. String : A sequence of characters.<br>
 ```hcl
