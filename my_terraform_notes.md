@@ -165,19 +165,19 @@ It will always be used to perform local operations onto your local machine.<br>
  it is always going to work on the remote machine. remote-exec you can specify the commands of shell scripts that want to execute on the remote machine.<br>
  - Supporting arguments for remote provisioners
   1. inline - With the help of an inline argument you can specify the multiple commands which you want to execute in an ordered fashion.<br>
-   ```hcl
+ ```hcl
    provisioner "remote-exec" {
     inline = [
       "touch hello.txt",
       "echo helloworld remote provisioner >> hello.txt",
     ]
-}
-  
+    }
+  ```
 2. script - It can be used to copy the script from local machine to remote machine and it always contains a relative path.<br>
 3. scripts - Here you can specify the multiple local scripts which want to copy or transfer to the remote machine and execute over there.<br>
    You cannot pass any arguments to scripts using the script or scripts arguments to this provisioner. If you want to specify arguments, upload the script with the file provisioner and then use inline to call it. <br>
    Example:
-   ```hcl
+```hcl
    resource "aws_instance" "web" {
      provisioner "file" {
     source      = "script.sh"
@@ -191,7 +191,7 @@ It will always be used to perform local operations onto your local machine.<br>
     ]
   }
 }
-
+```
 # MODULES
  terraform configuration so that you can re-use the configuration and keep your terraform code more clean and modular<br>
  ```hcl
