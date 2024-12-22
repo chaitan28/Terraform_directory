@@ -60,22 +60,16 @@ Allows you to use the same Terraform code for both environments.
 Use separate variable files for non-prod and prod configurations. These files may include region, instance type, VPC IDs, and other specific differences.
 
 Directory Structure
-css
-Copy code
 ├── main.tf
 ├── variables.tf
 ├── terraform.tfvars
 ├── nonprod.tfvars
 ├── prod.tfvars
 prod.tfvars
-hcl
-Copy code
 region       = "ap-south-1"
 aws_profile  = "prod"
 instance_type = "t3.micro"
 nonprod.tfvars
-hcl
-Copy code
 region       = "ap-south-1"
 aws_profile  = "nonprod"
 instance_type = "t2.micro"
