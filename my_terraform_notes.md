@@ -1,5 +1,5 @@
 ## Naming Rules in terraform
-1.It must be unique within the current module.
+1.It must be unique within the current module.<br>
 2.It must follow Terraform identifier rules:
 3.Must start with a letter.
 4.Can contain letters, numbers, hyphens (-), and underscores (_).
