@@ -6,7 +6,7 @@ provider "aws" {
 resource "aws_instance" "test" {
   ami                     = "ami-0453ec754f44f9a4a"
   instance_type           =  var.instance_type.id
-  key_name                = "aws-demo"
+  key_name                =  var.key_name.id
   tags = {
     Name = "poc_ec2"
     ENV= "Dev"
