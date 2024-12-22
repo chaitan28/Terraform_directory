@@ -1,10 +1,10 @@
 ## Naming Rules in terraform
-1.It must be unique within the current module.<br>
-2.It must follow Terraform identifier rules:<br>
-3.Must start with a letter.<br>
-4.Can contain letters, numbers, hyphens (-), and underscores (_).<br>
-5.Cannot start with a number.<br>
-Avoid special characters like !@#%.<br>
+1. It must be unique within the current module.<br>
+2. It must follow Terraform identifier rules:<br>
+3. Must start with a letter.<br>
+4. Can contain letters, numbers, hyphens (-), and underscores (_).<br>
+5. Cannot start with a number.<br>
+6. Avoid special characters like !@#%.<br>
 ### question1 : ec2 instance is generated with help of main.tf file in the project1 folder . by using terraform apply command i created a ec2 instance in the console. later on i have added tags in the aws_instance. then i have applied main.tf file . but as added tags to the recently created. why not it created a ec2 instance again ?
 Answer: The reason Terraform did not create a new EC2 instance after you added tags and ran terraform apply is because Terraform tracks the existing EC2 instance using its "state file". Instead of creating a new instance, it identifies that the existing instance needs to be updated.
 
