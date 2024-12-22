@@ -90,7 +90,7 @@ Syntax
         default     = "t2.micro"                # variable default value
        }
  ```	   
-Simple Values variables
+## Simple Values variables
 As the name suggests Simple Values variables are which hold only a single value. Here the types of Simple Value variables <br>
 1. String : A sequence of characters.<br>
 ```hcl
@@ -135,7 +135,7 @@ variable "project_environment" {
   }
 }
 ```
-# terraform output
+## terraform output
 Output values make information about your infrastructure available on the command line.<br>
 ```hcl
 output "instance_ips" {
@@ -147,7 +147,7 @@ output "instance_ips" {
 ```
 displays the instance private/public ips of the ec2 instance<br>
 
-# Terraform Provisioner
+## Terraform Provisioner
 Terraform Provisioners are used to performing certain custom actions and tasks either on the local machine or on the remote machine
 The custom actions can vary in nature and it can be -<br>
 > Running custom shell script on the local machine<br>
@@ -234,4 +234,22 @@ data "aws_instance" "myawsinstance" {
 } 
 ```
 # terraform state file (.tfstate)
+Any change which you make to your resource will be first reflected into the terraform state file before updating it onto the cloud infrastructure. Any information which is stored inside the terraform state file is known as metadata.<br>
+If you have more than one developer working on Terraform project then it is always recommended to use remote backend(AWS S3 Bucket) to store your state file remotely.<br>
+```hcl
+terraform {
+    backend "s3" {
+        bucket = "jhooq-terraform-s3-bucket"
+        key    = "jhooq/terraform/remote/s3/terraform.tfstate"
+        region     = "eu-central-1"
+    }
+}
+```
+After storing the .tfstate in s3 bucket , u see the local tfstate is missing . again u have to apply terraform init , plan , apply.<br>
 > terraform init -migrate-state.<br>
+> terraform state pull 
+ - It is quite often for a developer to take a break from work and during the break if developer's terraform project is out of sync then it is always recommended to get in sync with all the updates which has happened<br>
+ - If you are storing terraform state file remotely then you should always use terraform state pull before you start working with your terraform project<br>
+### Why Terraform State Locking is important?
+ - It prevents Terraform state file(terraform.tfstate) from accidental updates by putting a lock on file so that the current update can be finished before processing the new change.<br>
+    The feature of Terraform state locking is supported by AWS S3 and Dynamo DB.<br>
