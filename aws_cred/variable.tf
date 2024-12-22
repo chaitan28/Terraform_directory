@@ -1,18 +1,18 @@
 variable "region" {
-   description = "Instance type t2.micro"
+   description = "select the aws region "
    type        = string
 }
 
 variable "aws_profile" {
-   description = "Instance type t2.micro"
+   description = "select the aws credentials"
    type        = string
 }
 
 variable "instance_type" {
-   description = "Instance type t2.micro"
+   description = "select the aws Instance type "
    type        = string
 }
 variable "key_name" {
-   description = "Instance type t2.micro"
+   description = "select the aws_key in specific region"
    type        = string
 }
