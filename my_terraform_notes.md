@@ -1,8 +1,8 @@
 ## Naming Rules in Terraform identifier rules
-Must start with a letter <br>
-Can contain letters, numbers, hyphens (-), and underscores (_) <br>
-Cannot start with a number <br>
-Avoid special characters like !@#% <br>
+1. Must start with a letter <br>
+2. Can contain letters, numbers, hyphens (-), and underscores (_) <br>
+3. Cannot start with a number <br>
+4. Avoid special characters like !@#% <br>
 ```hcl
  valid Terraform identifiers
  my_instance, my-instance, webServer1, ec2_instance
@@ -161,9 +161,9 @@ Not only file but it can also be used for transferring/uploading the directories
 2. local-exec provisioner<br>
 It will always be used to perform local operations onto your local machine.<br>
 3. remote-exec provisioner<br>
- it is always going to work on the remote machine. remote-exec you can specify the commands of shell scripts that want to execute on the remote machine.
+ it is always going to work on the remote machine. remote-exec you can specify the commands of shell scripts that want to execute on the remote machine.<br>
  > Supporting arguments for remote provisioners
-   1.inline - With the help of an inline argument you can specify the multiple commands which you want to execute in an ordered fashion.
+   1.inline - With the help of an inline argument you can specify the multiple commands which you want to execute in an ordered fashion.<br>
    ```hcl
    provisioner "remote-exec" {
     inline = [
@@ -172,9 +172,9 @@ It will always be used to perform local operations onto your local machine.<br>
     ]
 }
 ```
-   2.script - It can be used to copy the script from local machine to remote machine and it always contains a relative path.
-   3.scripts - Here you can specify the multiple local scripts which want to copy or transfer to the remote machine and execute over there.
-   You cannot pass any arguments to scripts using the script or scripts arguments to this provisioner. If you want to specify arguments, upload the script with the file provisioner and then use inline to call it. 
+   2.script - It can be used to copy the script from local machine to remote machine and it always contains a relative path.<br>
+   3.scripts - Here you can specify the multiple local scripts which want to copy or transfer to the remote machine and execute over there.<br>
+   You cannot pass any arguments to scripts using the script or scripts arguments to this provisioner. If you want to specify arguments, upload the script with the file provisioner and then use inline to call it. <br>
    Example:
    ```hcl
    resource "aws_instance" "web" {
@@ -192,7 +192,7 @@ It will always be used to perform local operations onto your local machine.<br>
 }
 ```
 # MODULES
- terraform configuration so that you can re-use the configuration and keep your terraform code more clean and modular
+ terraform configuration so that you can re-use the configuration and keep your terraform code more clean and modular<br>
  ```hcl
 provider "aws" {
    region     = var.web_region
@@ -209,7 +209,9 @@ module "jhooq-webserver-2" {
 }
 ```
 # Terraform Workspaces
-Terraform workspaces is a very logical concept where you can have multiple states of your infrastructure configuration. To put this in simple words if you are running an infrastructure configuration in development environment then the same infrastructure can be run in the production environment.If you have not defined any workspace then there is always a default workspace created by terraform, so you always work in a default workspace of terraform. You can list the number of terraform workspaces by running the command terraform workspace show. Also, you can not delete the default workspace.
+Terraform workspaces is a very logical concept where you can have multiple states of your infrastructure configuration. To put this in simple words if you are running an infrastructure configuration in development environment then the same infrastructure can be run in the production environment.<br>
+If you have not defined any workspace then there is always a default workspace created by terraform, so you always work in a default workspace of terraform. <br>
+You can list the number of terraform workspaces by running the command terraform workspace show. Also, you can not delete the default workspace.<br>
    > terraform workspace new <workspace name>    :  You must also type in new for creating a new workspace 
    > terraform workspace list                    :  list all the workspaces which we have created previously
    > terraform workspace show                    :  which can help you to show the active running workspace in which you are working.
@@ -217,7 +219,8 @@ Terraform workspaces is a very logical concept where you can have multiple state
    > terraform workspace delete <workspace name> : delete the target workspace 
 
 # Data resources
-Terraform data sources can be beneficial if you want to retrieve or fetch the data from the cloud service providers such as AWS, AZURE, and GCP.Terraform Data Sources are a kind of an API that fetches the data/information from the resources running under the cloud infra and sending it back to terraform configuration for further use.
+Terraform data sources can be beneficial if you want to retrieve or fetch the data from the cloud service providers such as AWS, AZURE, and GCP.<br>
+Terraform Data Sources are a kind of an API that fetches the data/information from the resources running under the cloud infra and sending it back to terraform configuration for further use.<br>
 ```hcl
 data "aws_instance" "myawsinstance" {
     filter {
@@ -231,4 +234,4 @@ data "aws_instance" "myawsinstance" {
 } 
 ```
 # terraform state file (.tfstate)
-> terraform init -migrate-state.
+> terraform init -migrate-state.<br>
