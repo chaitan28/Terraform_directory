@@ -279,3 +279,9 @@ After storing the .tfstate in s3 bucket , u see the local tfstate is missing . a
    Remove-Item Env:\TF_LOG_PATH
 
 ```
+## Restoring Statefile
+ if the statefile is deleted or corrupted ,we restore it using terraform import command 
+ ```hcl
+   terraform import <terraform resource name> <resource id >
+   ```
+    
