@@ -265,4 +265,17 @@ After storing the .tfstate in s3 bucket , u see the local tfstate is missing . a
      billing_mode = "PAY_PER_REQUEST"
      }
      ```
-  ###
+## Terraform Debug and validation
+ ```hcl
+   export TF_LOG=Debug
+   echo STF_LOG
+   export TF_LOG_PATH="C:\Users\user\Documents"
+ ```
+ ```hcl
+   $env:TF_LOG = "DEBUG"
+   $env:TF_LOG #check the TF_log
+   $env:TF_LOG_PATH = "C:\Users\user\Documents\terraform\terraform-debug.log"
+   Remove-Item Env:\TF_LOG
+   Remove-Item Env:\TF_LOG_PATH
+
+```
