@@ -212,11 +212,11 @@ module "jhooq-webserver-2" {
 Terraform workspaces is a very logical concept where you can have multiple states of your infrastructure configuration. To put this in simple words if you are running an infrastructure configuration in development environment then the same infrastructure can be run in the production environment.<br>
 If you have not defined any workspace then there is always a default workspace created by terraform, so you always work in a default workspace of terraform. <br>
 You can list the number of terraform workspaces by running the command terraform workspace show. Also, you can not delete the default workspace.<br>
-   > terraform workspace new <workspace name>    :  You must also type in new for creating a new workspace 
-   > terraform workspace list                    :  list all the workspaces which we have created previously
-   > terraform workspace show                    :  which can help you to show the active running workspace in which you are working.
-   > terraform workspace select <workspace name> :  switch between the workspaces
-   > terraform workspace delete <workspace name> : delete the target workspace 
+   > terraform workspace new <workspace name>    :  You must also type in new for creating a new workspace <br>
+   > terraform workspace list                    :  list all the workspaces which we have created previously<br>
+   > terraform workspace show                    :  which can help you to show the active running workspace in which you are working.<br>
+   > terraform workspace select <workspace name> :  switch between the workspaces<br>
+   > terraform workspace delete <workspace name> : delete the target workspace <br>
 
 # Data resources
 Terraform data sources can be beneficial if you want to retrieve or fetch the data from the cloud service providers such as AWS, AZURE, and GCP.<br>
