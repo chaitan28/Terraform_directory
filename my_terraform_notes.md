@@ -284,4 +284,17 @@ After storing the .tfstate in s3 bucket , u see the local tfstate is missing . a
  ```hcl
    terraform import <terraform resource name> <resource id >
    ```
-    
+### Null Resource
+-   As in the name you see a prefix null which means this resource will not exist on your Cloud Infrastructure(AWS, Google Cloud, Azure). <br>
+- Terraform null_resource does not have a state which means it will be executed as soon as you run $ terraform apply command but no state will be saved. <br>
+Using trigger to execute null_resource everytime. trigger will only work when it detects the change in the key-value pair. <br>
+```hcl
+resource "null_resource" "null_resource_simple" { 
+  triggers = {
+    id = aws_instance.ec2_example.id  
+  }
+  provisioner "local-exec" {
+    command = "echo Hello World"
+  }
+}
+```
