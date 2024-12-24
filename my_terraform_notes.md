@@ -282,7 +282,8 @@ After storing the .tfstate in s3 bucket , u see the local tfstate is missing . a
 ## Restoring Statefile
  if the statefile is deleted or corrupted ,we restore it using terraform import command 
  ```hcl
-   terraform import <terraform resource name> <resource id >
+   terraform import <resource type>.<resource name>(anything) <resource id >
+   Example: terraform import aws_instance.example  i-0d97c46c9c8c65123
    ```
 ### Null Resource
 -   As in the name you see a prefix null which means this resource will not exist on your Cloud Infrastructure(AWS, Google Cloud, Azure). <br>
@@ -298,3 +299,7 @@ resource "null_resource" "null_resource_simple" {
   }
 }
 ```
+
+### If you changed manually in the configuration  of resource and you want to import it again 
+> terraform state rm <resource type>.<resource name>
+> terraform import <resource type>.<resource name>(anything) <resource id >
