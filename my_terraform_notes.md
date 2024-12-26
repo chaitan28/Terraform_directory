@@ -303,3 +303,9 @@ resource "null_resource" "null_resource_simple" {
 ### If you changed manually in the configuration  of resource and you want to import it again 
 > terraform state rm resource type.resource name  <br>
 > terraform import resource type.resource name-anything- resource id  <br>
+
+### Terraform depends 
+- The "depends_on" meta argument in Terraform is used to specify dependencies between resources within a Terraform configuration <br>
+-  multiple resources in the "depends_on" meta argument by providing a list of resource references. You must follow the following two conditions  <br>
+ > Each resource reference should be enclosed in square brackets <br>
+  > The list of references should be separated by commas. <br>
