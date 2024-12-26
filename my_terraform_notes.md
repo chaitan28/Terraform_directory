@@ -49,6 +49,9 @@ This command generates and shows an execution plan for Terraform.<br>
 It gives you an opportunity to confirm that the changes are what you expect.<br>
 When you run the terraform plan command, Terraform compares your current state (# terraform state list: which is stored in the terraform.tfstate file) with the desired state defined in your configuration files (e.g., main.tf, variables.tf, etc.)<br>
 
+## terraform validate
+Verifies that the configuration files (e.g., .tf files) are syntactically correct
+
 ## terraform apply
 This command will display the plan and prompt you for confirmation.<br>
 After you confirm, Terraform will execute the changes to the infrastructure<br>
@@ -65,6 +68,16 @@ This will destroy the resources without asking for confirmation.<br>
 
 ## terraform state show (aws_instance.example)
 Details of a specific EC2 instance of Instance ID, Public IP, Private IP, Availability Zone, Tags, and more<br>
+
+## terraform taint
+- terraform taint on a resource, it marks that resource for destruction and recreation during the next terraform apply
+- Before u apply taint command, you have to seen the resources in state file which needs to be tainted for this u can use <br>
+terraform state list <br>
+terraform taint resource_type.resource_name <br>
+For example, if you want to ensure that a null_resource or any other resource is always recreated during each terraform apply, you would do the following<br>
+terraform taint null_resource.test-null[0] <br>
+terraform untaint -resource_type-.-resource_name- <br>
+untained removes the taint and prevents the resource from being recreated on the next apply unless explicitly changed. <br>
 
 ## You need to supply variable during the terraform init
 terraform init --var-file=terraform.tfvars <br>
