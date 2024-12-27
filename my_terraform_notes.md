@@ -73,10 +73,10 @@ Details of a specific EC2 instance of Instance ID, Public IP, Private IP, Availa
 - terraform taint on a resource, it marks that resource for destruction and recreation during the next terraform apply
 - Before u apply taint command, you have to seen the resources in state file which needs to be tainted for this u can use <br>
 terraform state list <br>
-terraform taint resource_type.resource_name <br>
+terraform taint <resource_type>.<resource_name> <br>
 For example, if you want to ensure that a null_resource or any other resource is always recreated during each terraform apply, you would do the following<br>
 terraform taint null_resource.test-null[0] <br>
-terraform untaint -resource_type-.-resource_name- <br>
+terraform untaint <resource_type>.<resource_name> <br>
 untained removes the taint and prevents the resource from being recreated on the next apply unless explicitly changed. <br>
 
 ## You need to supply variable during the terraform init
@@ -149,6 +149,35 @@ variable "project_environment" {
   }
 }
 ```
+6. lookup
+    - lookup(key, value)<br>
+    - lookup(var.amis, var.region) <br>
+    Retrieves the AMI ID for the region specified in var.region<br>
+  lookup functions is used to map keypair to its value . suppose you specifcied region name in the .tfvars then the terraform will select the specific region amis hardcoded in the .tfvars to deploy  <br>
+
+
+7. element
+  - subnet_id = element(var.subnets, count.index) <br>
+- var.subnets                       : A variable that is expected to be a list of subnet IDs.<br>
+- count.index                       : An index value provided by the count meta-argument, which iterates over resources in a loop.count.index. The default index starts from 0 <br>
+- element(var.subnets, count.index) : This retrieves the subnet ID at the position specified by count.index in the var.subnets list. <br>
+```hcl
+variable "subnets" {
+  type = list(string)
+  default = ["subnet-abc123", "subnet-def456", "subnet-ghi789"]
+}
+resource "aws_instance" "example" {
+  count = length(var.subnets)
+
+  ami           = "ami-0c55b159cbfafe1f0" # Example AMI
+  instance_type = "t2.micro"
+  subnet_id     = element(var.subnets, count.index)
+  tags = {
+    Name = "Instance-${count.index +1}"
+  }
+}
+```
+
 ## terraform output
 Output values make information about your infrastructure available on the command line.<br>
 ```hcl
@@ -295,7 +324,7 @@ After storing the .tfstate in s3 bucket , u see the local tfstate is missing . a
 ## Restoring Statefile
  if the statefile is deleted or corrupted ,we restore it using terraform import command 
  ```hcl
-   terraform import <resource type>.<resource name>(anything) <resource id >
+   terraform import <resource type>.<resource name>(anything) <resource-id >
    Example: terraform import aws_instance.example  i-0d97c46c9c8c65123
    ```
 ### Null Resource
@@ -314,11 +343,11 @@ resource "null_resource" "null_resource_simple" {
 ```
 
 ### If you changed manually in the configuration  of resource and you want to import it again 
-> terraform state rm resource type.resource name  <br>
-> terraform import resource type.resource name-anything- resource id  <br>
+> terraform state rm <resource type>.<resource name>  <br>
+> terraform import <resource type>.<resource name><anything> <resource id > <br>
 
 ### Terraform depends 
 - The "depends_on" meta argument in Terraform is used to specify dependencies between resources within a Terraform configuration <br>
 -  multiple resources in the "depends_on" meta argument by providing a list of resource references. You must follow the following two conditions  <br>
  > Each resource reference should be enclosed in square brackets <br>
-  > The list of references should be separated by commas. <br>
+ > The list of references should be separated by commas. <br>
