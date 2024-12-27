@@ -128,7 +128,7 @@ variable "instance_count" {
   default     = true
 }
 ```
-4. List
+4. List : 
 list that will contain more than one element in it.<br>
 ```hcl
 variable "user_names" {
@@ -137,7 +137,7 @@ variable "user_names" {
   default     = ["user1", "user2", "user3s"]
 }
 ```
-5. Map
+5. Map: 
 map variable type where you can define the key-value pair.<br>
 ```hcl
 variable "project_environment" {
@@ -149,14 +149,14 @@ variable "project_environment" {
   }
 }
 ```
-6. lookup
-    - lookup(key, value)<br>
-    - lookup(var.amis, var.region) <br>
+6. lookup:
+- lookup(key, value)<br>
+- lookup(var.amis, var.region) <br>
     Retrieves the AMI ID for the region specified in var.region<br>
   lookup functions is used to map keypair to its value . suppose you specifcied region name in the .tfvars then the terraform will select the specific region amis hardcoded in the .tfvars to deploy  <br>
 
 
-7. element
+7. element:
   - subnet_id = element(var.subnets, count.index) <br>
 - var.subnets                       : A variable that is expected to be a list of subnet IDs.<br>
 - count.index                       : An index value provided by the count meta-argument, which iterates over resources in a loop.count.index. The default index starts from 0 <br>
@@ -197,13 +197,13 @@ The custom actions can vary in nature and it can be -<br>
 - Running custom shell script on the remote machine<br>
 - Copy file to the remote machine<br>
 Generic Provisioners (file, local-exec, and remote-exec)<br>
-1. file provisioner<br>
+1. file provisioner:<br>
 As the name suggests file provisioner can be used for transferring and copying the files from one machine to another machine.<br>
 Not only file but it can also be used for transferring/uploading the directories.<br>
 - Terraform provisioners only run when the resource (EC2 instance) is created. If the EC2 instance already exists, the file will not be copied again unless the instance is destroyed and recreated.<br>
-2. local-exec provisioner<br>
+2. local-exec provisioner:<br>
 It will always be used to perform local operations onto your local machine.<br>
-3. remote-exec provisioner<br>
+3. remote-exec provisioner:<br>
  it is always going to work on the remote machine. remote-exec you can specify the commands of shell scripts that want to execute on the remote machine.<br>
  - Supporting arguments for remote provisioners
   1. inline - With the help of an inline argument you can specify the multiple commands which you want to execute in an ordered fashion.<br>
