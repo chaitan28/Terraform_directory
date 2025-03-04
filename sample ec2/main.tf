@@ -17,7 +17,7 @@ resource "aws_instance" "test" {
 resource "aws_security_group" "test_sg" {
   name        = "poc_ec2_sg"
   description = "Allow inbound and outbound traffic"
-  vpc_id      = "vpc-01e40f303fba60b00"  # Replace with your VPC ID
+  vpc_id      = "vpc-060133793c35bfbee"  # Replace with your VPC ID
 
   # Inbound Rules
   ingress {
