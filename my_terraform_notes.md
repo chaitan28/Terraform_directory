@@ -177,6 +177,19 @@ resource "aws_instance" "example" {
   }
 }
 ```
+8. Conditional Expressions<br>
+
+Conditional expressions in Terraform are used to define conditional logic within your configurations. They allow you to make decisions or set values based on conditions. Conditional expressions are typically used to control whether resources are created or configured based on the evaluation of a condition.<br>
+
+The syntax for a conditional expression in Terraform is:<br>
+
+```hcl
+condition ? true_val : false_val
+```
+
+- `condition` is an expression that evaluates to either `true` or `false`.
+- `true_val` is the value that is returned if the condition is `true`.
+- `false_val` is the value that is returned if the condition is `false`.
 
 ## terraform output
 Output values make information about your infrastructure available on the command line.<br>
