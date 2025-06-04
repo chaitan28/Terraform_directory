@@ -157,7 +157,7 @@ variable "project_environment" {
 
 
 7. **element**:
-  - subnet_id = element(var.subnets, count.index) <br>
+- subnet_id = element(var.subnets, count.index) <br>
 - var.subnets                       : A variable that is expected to be a list of subnet IDs.<br>
 - count.index                       : An index value provided by the count meta-argument, which iterates over resources in a loop.count.index. The default index starts from 0 <br>
 - element(var.subnets, count.index) : This retrieves the subnet ID at the position specified by count.index in the var.subnets list. <br>
@@ -210,16 +210,16 @@ The custom actions can vary in nature and it can be -<br>
 - Running custom shell script on the remote machine<br>
 - Copy file to the remote machine<br>
 Generic Provisioners (file, local-exec, and remote-exec)<br>
-1. file provisioner:<br>
+1. **file provisioner**:<br>
 As the name suggests file provisioner can be used for transferring and copying the files from one machine to another machine.<br>
 Not only file but it can also be used for transferring/uploading the directories.<br>
 - Terraform provisioners only run when the resource (EC2 instance) is created. If the EC2 instance already exists, the file will not be copied again unless the instance is destroyed and recreated.<br>
-2. local-exec provisioner:<br>
+2. **local-exec provisioner**:<br>
 It will always be used to perform local operations onto your local machine.<br>
-3. remote-exec provisioner:<br>
+3. **remote-exec provisioner**:<br>
  it is always going to work on the remote machine. remote-exec you can specify the commands of shell scripts that want to execute on the remote machine.<br>
  - Supporting arguments for remote provisioners
-  1. inline - With the help of an inline argument you can specify the multiple commands which you want to execute in an ordered fashion.<br>
+  1. **inline** - With the help of an inline argument you can specify the multiple commands which you want to execute in an ordered fashion.<br>
  ```hcl
    provisioner "remote-exec" {
     inline = [
@@ -228,8 +228,8 @@ It will always be used to perform local operations onto your local machine.<br>
     ]
     }
   ```
-2. script - It can be used to copy the script from local machine to remote machine and it always contains a relative path.<br>
-3. scripts - Here you can specify the multiple local scripts which want to copy or transfer to the remote machine and execute over there.<br>
+2. **script** - It can be used to copy the script from local machine to remote machine and it always contains a relative path.<br>
+3. **scripts** - Here you can specify the multiple local scripts which want to copy or transfer to the remote machine and execute over there.<br>
    You cannot pass any arguments to scripts using the script or scripts arguments to this provisioner. If you want to specify arguments, upload the script with the file provisioner and then use inline to call it. <br>
    Example:
 ```hcl
