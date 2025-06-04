@@ -106,21 +106,21 @@ Syntax
  ```	   
 ## Simple Values variables(Terraform functions)
 As the name suggests Simple Values variables are which hold only a single value. Here the types of Simple Value variables <br>
-1. String : A sequence of characters.<br>
+1. **String**: A sequence of characters.<br>
 ```hcl
 variable "instance_type" {
   type    = string
   default = "t2.micro"
 }
 ```
-2. number:  Numeric values (integer or float).<br>
+2. **number**:  Numeric values (integer or float).<br>
 ```hcl 
 variable "instance_count" {
   type    = number
   default = 3
 }
 ```
-3. bool: Boolean value (true or false).<br>
+3. **bool**: Boolean value (true or false).<br>
 ```hcl
  variable "enable_public_ip" {
   description = "Enable public IP address"
@@ -128,7 +128,7 @@ variable "instance_count" {
   default     = true
 }
 ```
-4. List : 
+4. **List** : 
 list that will contain more than one element in it.<br>
 ```hcl
 variable "user_names" {
@@ -137,7 +137,7 @@ variable "user_names" {
   default     = ["user1", "user2", "user3s"]
 }
 ```
-5. Map: 
+5. **Map**: 
 map variable type where you can define the key-value pair.<br>
 ```hcl
 variable "project_environment" {
@@ -149,14 +149,14 @@ variable "project_environment" {
   }
 }
 ```
-6. lookup:
+6.**lookup**:
 - lookup(key, value)<br>
 - lookup(var.amis, var.region) <br>
     Retrieves the AMI ID for the region specified in var.region<br>
   lookup functions is used to map keypair to its value . suppose you specifcied region name in the .tfvars then the terraform will select the specific region amis hardcoded in the .tfvars to deploy  <br>
 
 
-7. element:
+7. **element**:
   - subnet_id = element(var.subnets, count.index) <br>
 - var.subnets                       : A variable that is expected to be a list of subnet IDs.<br>
 - count.index                       : An index value provided by the count meta-argument, which iterates over resources in a loop.count.index. The default index starts from 0 <br>
@@ -177,7 +177,7 @@ resource "aws_instance" "example" {
   }
 }
 ```
-8. Conditional Expressions<br>
+8. **Conditional Expressions**<br>
 
 Conditional expressions in Terraform are used to define conditional logic within your configurations. They allow you to make decisions or set values based on conditions. Conditional expressions are typically used to control whether resources are created or configured based on the evaluation of a condition.<br>
 
