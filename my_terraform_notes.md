@@ -274,6 +274,62 @@ You can list the number of terraform workspaces by running the command terraform
    - terraform workspace select <workspace name> :  switch between the workspaces<br>
    - terraform workspace delete <workspace name> : delete the target workspace <br>
 
+# Alias Argument
+
+In **Terraform**, the `alias` argument is used to define **multiple configurations** of the same provider. This is especially helpful when:
+
+* You need to **use the same provider with different regions/accounts**
+* You want to **use multiple credentials**
+* You must **split resources across provider configurations**
+
+### Basic Syntax
+
+```hcl
+provider "aws" {
+  region = "us-east-1"
+}
+
+provider "aws" {
+  alias  = "west"
+  region = "us-west-2"
+}
+```
+
+Here, two AWS provider configurations are defined:
+
+* Default: `us-east-1`
+* Aliased: `us-west-2` (accessed via `provider = aws.west`)
+
+---
+
+###  Example Use Case – Deploying Resources in Two Regions
+
+```hcl
+resource "aws_s3_bucket" "east_bucket" {
+  bucket = "my-east-bucket"
+  provider = aws  # Uses default provider (us-east-1)
+}
+
+resource "aws_s3_bucket" "west_bucket" {
+  bucket = "my-west-bucket"
+  provider = aws.west  # Uses aliased provider (us-west-2)
+}
+```
+
+---
+
+###  Important Notes
+
+* Every resource using the aliased provider **must explicitly declare** the provider like `provider = aws.alias_name`.
+* Aliases are **local to a module**. If you want to use it in child modules, you must **pass it explicitly** using `providers` block.
+
+---
+
+
+---
+
+Let me know if you want a working Terraform sample with aliases across modules or across accounts.
+
 # Data resources
 Terraform data sources can be beneficial if you want to retrieve or fetch the data from the cloud service providers such as AWS, AZURE, and GCP.<br>
 Terraform Data Sources are a kind of an API that fetches the data/information from the resources running under the cloud infra and sending it back to terraform configuration for further use.<br>
