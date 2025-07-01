@@ -364,3 +364,45 @@ resource "null_resource" "null_resource_simple" {
 -  multiple resources in the "depends_on" meta argument by providing a list of resource references. You must follow the following two conditions  <br>
  > Each resource reference should be enclosed in square brackets <br>
  > The list of references should be separated by commas. <br>
+
+ 
+## Terraform locals
+- Local values can be helpful to avoid repeating the same values or expressions multiple times in a configuration, but if overused they can also make a configuration hard to read by future maintainers by hiding the actual values used <br>
+- Locals are defined in a `locals` block and can be referenced throughout the configuration using the `local.<NAME>` syntax. <br>
+
+### Syntax
+```hcl
+locals {
+  <NAME> = <EXPRESSION>
+}
+```
+
+### Example
+```hcl
+locals {
+  project_name = "my-app"
+  region       = "us-west-2"
+  common_tags  = {
+    Environment = "production"
+    Project     = local.project_name
+  }
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-12345678"
+  instance_type = "t2.micro"
+
+  tags = local.common_tags
+}
+
+output "project_region" {
+  value = "${local.project_name}-${local.region}"
+}
+```
+
+### Explanation of Example
+- `project_name` and `region` are defined as local variables.
+- `common_tags` is a map that uses `local.project_name` to avoid hardcoding.
+- The `aws_instance` resource uses `local.common_tags` for its tags.
+- The `output` block combines `local.project_name` and `local.region` to produce a value like `my-app-us-west-2`.
+
