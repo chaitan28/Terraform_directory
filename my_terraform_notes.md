@@ -247,6 +247,30 @@ It will always be used to perform local operations onto your local machine.<br>
   }
 }
 ```
+
+##  specific version of Terraform
+
+To use a **specific version of Terraform**, you can control it in two main ways:
+
+###  **1. Declare Required Terraform Version in Code**
+
+In your root module (typically in `main.tf` or `versions.tf`):
+
+```hcl
+terraform {
+  required_version = "1.6.6"
+}
+```
+
+You can also use version constraints:
+
+```hcl
+terraform {
+  required_version = ">= 1.5.0, < 1.7.0"
+}
+```
+---
+
 # MODULES
  terraform configuration so that you can re-use the configuration and keep your terraform code more clean and modular<br>
  ```hcl
@@ -389,7 +413,7 @@ After storing the .tfstate in s3 bucket , u see the local tfstate is missing . a
    terraform import <resource type>.<resource name>(anything) <resource-id >
    Example: terraform import aws_instance.example  i-0d97c46c9c8c65123
    ```
-   
+
 ---
 
 ### Null Resource
