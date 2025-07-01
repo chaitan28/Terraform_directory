@@ -249,12 +249,7 @@ It will always be used to perform local operations onto your local machine.<br>
 ```
 
 ##  specific version of Terraform
-
-To use a **specific version of Terraform**, you can control it in two main ways:
-
-###  **1. Declare Required Terraform Version in Code**
-
-In your root module (typically in `main.tf` or `versions.tf`):
+Declare Required Terraform Version in your root module (typically in `main.tf` or `versions.tf`):
 
 ```hcl
 terraform {
