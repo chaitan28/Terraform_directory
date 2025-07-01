@@ -300,7 +300,6 @@ Here, two AWS provider configurations are defined:
 * Default: `us-east-1`
 * Aliased: `us-west-2` (accessed via `provider = aws.west`)
 
----
 
 ###  Example Use Case – Deploying Resources in Two Regions
 
@@ -316,8 +315,6 @@ resource "aws_s3_bucket" "west_bucket" {
 }
 ```
 
----
-
 ###  Important Notes
 
 * Every resource using the aliased provider **must explicitly declare** the provider like `provider = aws.alias_name`.
@@ -325,10 +322,6 @@ resource "aws_s3_bucket" "west_bucket" {
 
 ---
 
-
----
-
-Let me know if you want a working Terraform sample with aliases across modules or across accounts.
 
 # Data resources
 Terraform data sources can be beneficial if you want to retrieve or fetch the data from the cloud service providers such as AWS, AZURE, and GCP.<br>
@@ -396,6 +389,9 @@ After storing the .tfstate in s3 bucket , u see the local tfstate is missing . a
    terraform import <resource type>.<resource name>(anything) <resource-id >
    Example: terraform import aws_instance.example  i-0d97c46c9c8c65123
    ```
+   
+---
+
 ### Null Resource
 -   As in the name you see a prefix null which means this resource will not exist on your Cloud Infrastructure(AWS, Google Cloud, Azure). <br>
 - Terraform null_resource does not have a state which means it will be executed as soon as you run $ terraform apply command but no state will be saved. <br>
